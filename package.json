@@ -11,7 +11,8 @@
     "Google Cloud",
     "Google Cloud PubSub",
     "PubSub",
-    "NestJS"
+    "NestJS",
+    "Typescript"
   ],
   "author": "Jérôme Dumas",
   "license": "MIT",
@@ -24,13 +25,13 @@
     "clean": "rimraf dist",
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"{lib,test}/**/*.ts\"",
-    "lint:eslint": "eslint \"lib/**/*.ts\" --fix",
+    "format": "prettier --write \"{src,test}/**/*.ts\"",
+    "lint:eslint": "eslint \"src/**/*.ts\" --fix",
     "lint:markdownlint": "markdownlint \"*.md\"",
     "lint": "run-s lint:*",
     "test": "jest --passWithNoTests",
     "format-staged": "pretty-quick --staged",
-    "prepare": "husky install"
+    "prepare": "husky install && npm run build"
   },
   "peerDependencies": {
     "@nestjs/common": ">=7.x.x",

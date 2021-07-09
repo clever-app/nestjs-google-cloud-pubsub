@@ -1,5 +1,7 @@
+.circleci/
+node_modules/
+
 # source
-lib
 index.ts
 package-lock.json
 tslint.json
