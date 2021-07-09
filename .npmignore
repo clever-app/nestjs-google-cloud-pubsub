@@ -2,7 +2,7 @@
 node_modules/
 
 # source
-index.ts
+#index.ts
 package-lock.json
 tslint.json
 tsconfig.json
