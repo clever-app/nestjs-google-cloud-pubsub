@@ -29,16 +29,21 @@ export class GCloudPubSubSubscriber
     private options: IGCloudPubSubSubscriberOptions
   ) {
     super();
-  }
 
-  public listen(callback: () => void) {
+    this.logger.debug(
+      `options: ${this.options ? JSON.stringify(this.options) : this.options}`
+    );
+
     // initialiser le flag de terminaison à false (car on est en démarrage)
     this.isShuttingDown = false;
 
-    console.log('this.options=', this.options);
-
     // définir le client Google Pub/Sub
     this.client = new PubSub(this.options.clientConfig);
+  }
+
+  public listen(callback: () => void) {
+    // reset du flag
+    this.isShuttingDown = false;
 
     // pour chaque subscription mettre en place l'écoute avec le handler associé
     this.options.subscriptionIds.forEach((subcriptionName) => {
