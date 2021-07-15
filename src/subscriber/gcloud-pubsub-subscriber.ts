@@ -30,15 +30,16 @@ export class GCloudPubSubSubscriber
   ) {
     super();
 
-    this.logger.debug(
+    this.logger.log(
       `options: ${this.options ? JSON.stringify(this.options) : this.options}`
     );
 
-    // initialiser le flag de terminaison à false (car on est en démarrage)
-    this.isShuttingDown = false;
+    console.log(
+      `options: ${this.options ? JSON.stringify(this.options) : this.options}`
+    );
 
     // définir le client Google Pub/Sub
-    this.client = new PubSub(this.options.clientConfig);
+    this.client = new PubSub({ ...this.options.clientConfig });
   }
 
   public listen(callback: () => void) {
