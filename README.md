@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # [nestjs-google-cloud-pubsub](https://github.com/clever-app/nestjs-google-cloud-pubsub)
 
 [![npm version](https://img.shields.io/npm/v/@clever-app/nestjs-google-cloud-pubsub.svg)](https://www.npmjs.org/package/@clever-app/nestjs-google-cloud-pubsub)
@@ -38,7 +37,3 @@ npm run lint
 ## License
 
 Google Cloud PubSub Module for Nest.js is [MIT licensed](LICENSE).
-=======
-# nestjs-google-cloud-pubsub
-Google Cloud PubSub using NestJS
->>>>>>> fa337f6 (Initial commit)
