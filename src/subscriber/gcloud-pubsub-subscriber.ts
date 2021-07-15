@@ -1,17 +1,17 @@
 import { Message, PubSub, Subscription } from '@google-cloud/pubsub';
 import { Inject } from '@nestjs/common';
 import { CustomTransportStrategy, Server } from '@nestjs/microservices';
+import { IGCloudPubSubSubscriberOptions } from './gcloud-pubsub-subscriber-options.interface';
 import {
   GCLOUD_PUBSUB_DEFAULT_RETRY_CODES,
   GCLOUD_PUBSUB_ERROR,
   GCLOUD_PUBSUB_MESSAGE,
-  GCLOUD_PUBSUB_MODULE_OPTIONS,
-} from '../constants/gcloud-pubsub.constants';
-import { IGCloudPubSubOptions } from '../interfaces/gcloud-pubsub-options.interface';
+  GCLOUD_PUBSUB_SUBSCRIBER_MODULE_OPTIONS,
+} from './gcloud-pubsub-subscriber.constants';
 
 const RETRY_INTERVAL = 5000;
 
-export class GCloudPubSubServer
+export class GCloudPubSubSubscriber
   extends Server
   implements CustomTransportStrategy
 {
@@ -25,18 +25,18 @@ export class GCloudPubSubServer
   public isShuttingDown = false;
 
   constructor(
-    @Inject(GCLOUD_PUBSUB_MODULE_OPTIONS)
-    private options: IGCloudPubSubOptions
+    @Inject(GCLOUD_PUBSUB_SUBSCRIBER_MODULE_OPTIONS)
+    private options: IGCloudPubSubSubscriberOptions
   ) {
     super();
   }
 
   public listen(callback: () => void) {
-    // marquer l
+    // initialiser le flag de terminaison à false (car on est en démarrage)
     this.isShuttingDown = false;
 
-    // définir le client
-    this.client = new PubSub(this.options.authOptions);
+    // définir le client Google Pub/Sub
+    this.client = new PubSub(this.options.clientConfig);
 
     // pour chaque subscription mettre en place l'écoute avec le handler associé
     this.options.subscriptionIds.forEach((subcriptionName) => {
