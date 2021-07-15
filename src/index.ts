@@ -9,3 +9,4 @@ export * from './subscriber/gcloud-pubsub-subscriber-async-options.interface';
 export * from './subscriber/gcloud-pubsub-subscriber-options.interface';
 export * from './subscriber/gcloud-pubsub-subscriber.constants';
 export * from './subscriber/gcloud-pubsub-subscriber.module';
+export * from './utils/gcloud-pubsub-utils';
