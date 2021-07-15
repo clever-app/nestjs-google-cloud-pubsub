@@ -37,14 +37,14 @@ export class GCloudPubSubSubscriber
     console.log(
       `options: ${this.options ? JSON.stringify(this.options) : this.options}`
     );
-
-    // définir le client Google Pub/Sub
-    this.client = new PubSub({ ...this.options.clientConfig });
   }
 
   public listen(callback: () => void) {
     // reset du flag
     this.isShuttingDown = false;
+
+    // définir le client Google Pub/Sub
+    this.client = new PubSub({ ...(this.options.clientConfig.auth as any) });
 
     // pour chaque subscription mettre en place l'écoute avec le handler associé
     this.options.subscriptionIds.forEach((subcriptionName) => {
