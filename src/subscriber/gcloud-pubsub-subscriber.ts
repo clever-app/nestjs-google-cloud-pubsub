@@ -35,6 +35,8 @@ export class GCloudPubSubSubscriber
     // initialiser le flag de terminaison à false (car on est en démarrage)
     this.isShuttingDown = false;
 
+    console.log('this.options=', this.options);
+
     // définir le client Google Pub/Sub
     this.client = new PubSub(this.options.clientConfig);
 
