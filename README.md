@@ -4,7 +4,7 @@
 
 ## Description
 
-Google Cloud PubSub Module for Nest.js Framework
+Google Cloud PubSub Module for Nest.js Framework.
 
 ## Installation
 
