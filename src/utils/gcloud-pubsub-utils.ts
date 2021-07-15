@@ -11,18 +11,18 @@ export class GCloudPubSubUtils {
   ): Promise<void> {
     // vérifier les données entrantes
     if (!pubsub) {
-      throw new Error(`Gcloud Pub/Sub client not initialized.`);
+      throw new Error(`GCloud Pub/Sub client not initialized.`);
     }
 
     if (!topicName) {
       throw new Error(
-        `Gcloud Pub/Sub failed to init subscription, because topic name specified is undefined.`
+        `GCloud Pub/Sub failed to init subscription, because topic name specified is undefined.`
       );
     }
 
     if (!subscriptionName) {
       throw new Error(
-        `Gcloud Pub/Sub failed to init subscription, because subscription name specified is undefined.`
+        `GCloud Pub/Sub failed to init subscription, because subscription name specified is undefined.`
       );
     }
 
@@ -30,7 +30,7 @@ export class GCloudPubSubUtils {
     const topic = pubsub.topic(topicName);
     // est-ce que le topic exsite ?
     if (!(await topic.exists())[0]) {
-      throw new Error(`Gcloud Pub/Sub topic not found: '${topicName}'`);
+      throw new Error(`GCloud Pub/Sub topic not found: '${topicName}'`);
     }
 
     // pointer sur l'abonnement associé au topic

@@ -4,12 +4,11 @@ import { CustomTransportStrategy, Server } from '@nestjs/microservices';
 import { IGCloudPubSubSubscriberOptions } from './gcloud-pubsub-subscriber-options.interface';
 import {
   GCLOUD_PUBSUB_DEFAULT_RETRY_CODES,
+  GCLOUD_PUBSUB_DEFAULT_RETRY_INTERVAL,
   GCLOUD_PUBSUB_ERROR,
   GCLOUD_PUBSUB_MESSAGE,
   GCLOUD_PUBSUB_SUBSCRIBER_MODULE_OPTIONS,
 } from './gcloud-pubsub-subscriber.constants';
-
-const RETRY_INTERVAL = 5000;
 
 export class GCloudPubSubSubscriber
   extends Server
@@ -30,11 +29,7 @@ export class GCloudPubSubSubscriber
   ) {
     super();
 
-    this.logger.log(
-      `options: ${this.options ? JSON.stringify(this.options) : this.options}`
-    );
-
-    // définir le client Google Pub/Sub
+    // initialiser le client Google Pub/Sub
     this.client = new PubSub(this.options.clientConfig);
   }
 
@@ -78,11 +73,15 @@ export class GCloudPubSubSubscriber
         GCLOUD_PUBSUB_DEFAULT_RETRY_CODES.includes(error.code)
       ) {
         this.logger.warn(`Closing subscription: ${subcriptionName}`);
+
+        // fermeture de l'abonnement
         subscription.close();
+
+        // mise en place du déclencheur pour réouvrir l'abonnement
         setTimeout(() => {
           this.logger.warn(`Opening subscription: ${subcriptionName}`);
           subscription.open();
-        }, RETRY_INTERVAL);
+        }, GCLOUD_PUBSUB_DEFAULT_RETRY_INTERVAL);
       }
     };
   }
