@@ -4,6 +4,29 @@ import { Logger } from '@nestjs/common';
 export class GCloudPubSubUtils {
   private static readonly logger = new Logger(GCloudPubSubUtils.name);
 
+  static async initTopic(pubsub: PubSub, topicName: string): Promise<void> {
+    // vérifier les données entrantes
+    if (!pubsub) {
+      throw new Error(`GCloud Pub/Sub client not initialized.`);
+    }
+
+    if (!topicName) {
+      throw new Error(
+        `GCloud Pub/Sub failed to init subscription, because topic name specified is undefined.`
+      );
+    }
+
+    // pointer sur le topic
+    const topic = pubsub.topic(topicName);
+    // est-ce que le topic existe ?
+    if (!(await topic.exists())[0]) {
+      // créér le Topic
+      topic.create();
+      // tracer la création
+      this.logger.log(`GCloud Pub/Sub topic created: '${topicName}'`);
+    }
+  }
+
   static async initSubscription(
     pubsub: PubSub,
     topicName: string,
@@ -28,7 +51,7 @@ export class GCloudPubSubUtils {
 
     // pointer sur le topic
     const topic = pubsub.topic(topicName);
-    // est-ce que le topic exsite ?
+    // est-ce que le topic existe ?
     if (!(await topic.exists())[0]) {
       throw new Error(`GCloud Pub/Sub topic not found: '${topicName}'`);
     }
